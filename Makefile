@@ -1,5 +1,5 @@
-CXXFLAGS=-g -Wall -Wextra -DNDEBUG $(OPTFLAGS)
-CFLAGS=-g -Wall -Wextra -DNDEBUG $(OPTFLAGS)
+CXXFLAGS=-O2 -DNDEBUG $(OPTFLAGS)
+CFLAGS=-O2 -DNDEBUG $(OPTFLAGS)
 LIBS=$(OPTLIBS)
 PREFIX?=/usr/local
 #CC=g++
@@ -16,7 +16,7 @@ EXECUTABLE=build/isextract
 # The Target Build
 all: $(EXECUTABLE)
 
-dev: CXXFLAGS=-g -Wall -Wexta $(OPTFLAGS)
+dev: CXXFLAGS=-g -Wall -Wextra $(OPTFLAGS)
 dev: all
 
 win32:
