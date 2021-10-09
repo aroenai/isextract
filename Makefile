@@ -1,10 +1,12 @@
 CXXFLAGS=-g -Wall -Wextra -DNDEBUG $(OPTFLAGS)
+CFLAGS=-g -Wall -Wextra -DNDEBUG $(OPTFLAGS)
 LIBS=$(OPTLIBS)
 PREFIX?=/usr/local
-CC=g++
+#CC=g++
+CC=gcc
 
-SOURCES=$(wildcard src/**/*.cpp src/*.cpp)
-OBJECTS=$(patsubst %.cpp,%.o,$(SOURCES))
+SOURCES=src/blast.c src/isextract.c src/main.c
+OBJECTS=src/blast.o src/isextract.o src/main.o
 
 TEST_SRC=$(wildcard tests/*_tests.cpp)
 TESTS=$(patsubst %.cpp,%,$(TEST_SRC))
@@ -32,10 +34,7 @@ build:
 
 # The Cleaner
 clean:
-	rm -rf $(OBJECTS) $(TESTS)
-	rm -f tests/tests.log
-	find . -name "*.gc*" -exec rm {} \;
-	rm -rf `find . -name "*.dSYM" -print`
+	rm -rf $(OBJECTS) $(TESTS) $(TARGET) mtrace*.txt
 
 # The Install
 install: all

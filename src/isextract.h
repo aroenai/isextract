@@ -8,52 +8,23 @@
 #ifndef ISEXTRACT_H
 #define	ISEXTRACT_H
 
-#include "blast.h"
-#include <string>
-#include <vector>
-#include <fstream>
-#include <map>
-
-#ifdef _WIN32
-#define DIR_SEPARATOR '\\'
-#include "win32/stdint.h"
-#else
-#define DIR_SEPARATOR '/'
-#include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-class InstallShield
-{
-public:
-    InstallShield();
-    ~InstallShield();
-    void open(std::string& filename);
-    void close();
-    void listFiles();
-    bool extractFile(const std::string& filename, const std::string& dir);
-    bool extractAll(const std::string& dir);
-private:
-    struct t_entry {
-        uint32_t compressed_size;
-        uint32_t uncompressed_size;
-        uint32_t offset;
-        uint32_t datetime;
-    };
-    typedef std::map<std::string, t_entry> t_file_map;
-    typedef std::pair<std::string, t_entry> t_file_entry;
-    typedef std::map<std::string, t_entry>::const_iterator t_file_iter;
-    
-    uint32_t parseDirs();
-    void parseFiles();
-    t_file_map m_files;
-    std::vector<std::string> m_filenames;
-    std::string m_filename;
-    std::fstream m_fh;
-    uint32_t m_dataoffset;
-    uint32_t m_datasize;
-    t_file_iter m_current_file;
-    int32_t m_file_remaining;
-};
+#include "blast.h"
+#include <stdbool.h>
+
+typedef struct _ishield3 ishield3;
+
+ishield3 * ishield3_open (const char * filename);
+void ishield3_close (ishield3 * is3);
+void ishield3_listFiles (ishield3 * is3);
+bool ishield3_extractAll (ishield3 * is3, const char * outdir);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif	/* ISEXTRACT_H */
 
